@@ -1,0 +1,35 @@
+name: Daily Bluesky Turkish Translation Notifier Cronjob
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Runs weekly on Sundays at midnight UTC
+  workflow_dispatch:  # Allows manual triggering
+
+permissions:
+  contents: read
+
+jobs:
+  cronjob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+                
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+            
+      - name: Install dependencies
+        run: uv sync
+          
+      - name: Run script
+        run: uv run main.py
