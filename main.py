@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -156,17 +157,26 @@ def main():
                 print(f"✅ Approved Percentage:  {results['approved_percent']}")
                 print(f"📝 Words to Translate:   {results['words_to_translate']}")
                 print("=" * 60)
+                
                 check_result = check_results(results)
                 if check_result.is_there_a_job:
                     print("Translation job found.")
-                    notify_discord_webhook(check_result, config.discord_webhook_url)
+                    success = notify_discord_webhook(check_result, config.discord_webhook_url)
+                    if not success:
+                        print("❌ Failed to send Discord notification")
+                        sys.exit(1)
                 else:
                     print("No translation job found.")
+                
+                print("✅ Script completed successfully")
+                sys.exit(0)
             else:
                 print("❌ Failed to scrape translation statistics")
+                sys.exit(1)
 
     except Exception as e:
         print(f"❌ Application error: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
