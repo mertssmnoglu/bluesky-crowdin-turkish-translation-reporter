@@ -136,7 +136,7 @@ def validate_results(results: Dict[str, str]) -> bool:
     """
 
     return (
-        results["translated_percent"] == "99%" and results["approved_percent"] == "100%"
+        results["translated_percent"] == "100%" and results["approved_percent"] == "100%"
     )
 
 
