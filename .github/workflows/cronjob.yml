@@ -1,4 +1,5 @@
-name: Daily Bluesky Turkish Translation Notifier Cronjob
+name: Weekly Bluesky Turkish Translation Notifier Cronjob
+run-name: weekly-bluesky-notifier
 
 on:
   schedule:
